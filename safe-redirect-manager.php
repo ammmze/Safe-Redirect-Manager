@@ -392,10 +392,10 @@ class SRM_Safe_Redirect_Manager {
 		$redirect = get_post( $post_id );
 		if ( empty( $redirect ) )
 			return $title;
-		
+
 		if ( $redirect->post_type != $this->redirect_post_type )
 			return $title;
-		
+
 		$redirect_from = get_post_meta( $post_id, $this->meta_key_redirect_from, true );
 		if ( ! empty( $redirect_from ) )
 			return $redirect_from;
@@ -515,7 +515,7 @@ class SRM_Safe_Redirect_Manager {
 				$allow_regex = false;
 				delete_post_meta( $post_id, $this->meta_key_enable_redirect_from_regex );
 			}
-		
+
 			if ( ! empty( $_POST['srm' . $this->meta_key_redirect_from] ) ) {
 				update_post_meta( $post_id, $this->meta_key_redirect_from, $this->sanitize_redirect_from( $_POST['srm' . $this->meta_key_redirect_from], $allow_regex ) );
 			} else {
@@ -628,7 +628,7 @@ class SRM_Safe_Redirect_Manager {
 	?>
 		<p>
 			<label for="srm<?php echo $this->meta_key_redirect_from; ?>"><?php _e( 'Redirect From:', 'safe-redirect-manager' ); ?></label><br />
-			<input type="text" name="srm<?php echo $this->meta_key_redirect_from; ?>" id="srm<?php echo $this->meta_key_redirect_from; ?>" value="<?php echo esc_attr( $redirect_from ); ?>" /> 
+			<input type="text" name="srm<?php echo $this->meta_key_redirect_from; ?>" id="srm<?php echo $this->meta_key_redirect_from; ?>" value="<?php echo esc_attr( $redirect_from ); ?>" />
 			<input type="checkbox" name="srm<?php echo $this->meta_key_enable_redirect_from_regex; ?>" id="srm<?php echo $this->meta_key_enable_redirect_from_regex; ?>" <?php checked( true, (bool) $enable_regex ); ?> value="1" />
 			<label for="srm<?php echo $this->meta_key_enable_redirect_from_regex; ?>"><?php _e( 'Enable Regular Expressions (advanced)', 'safe-redirect-manager' ); ?></label><br />
 			<p class="description"><?php _e( "This path should be relative to the root of this WordPress installation (or the sub-site, if you are running a multi-site). Appending a (*) wildcard character will match all requests with the base. Warning: Enabling regular expressions will disable wildcards and completely change the way the * symbol is interpretted.", 'safe-redirect-manager' ); ?></p>
@@ -730,7 +730,7 @@ class SRM_Safe_Redirect_Manager {
 					);
 			}
 
-			if ( count( $redirects ) == $this->default_max_redirects 
+			if ( count( $redirects ) == $this->default_max_redirects
 				|| count( $redirect_query->posts ) < $posts_per_page )
 				$build = false;
 			else
@@ -751,7 +751,7 @@ class SRM_Safe_Redirect_Manager {
 	 * @return array
 	 */
 	public function update_redirect_cache() {
-	
+
 		$redirect_cache = $this->get_redirects();
 
 		set_transient( $this->cache_key_redirects, $redirect_cache );
@@ -906,11 +906,11 @@ class SRM_Safe_Redirect_Manager {
 
 		return $path;
 	}
-	
+
 	/**
 	 * Return a permalink for a redirect post, which is the "redirect from"
 	 * URL for that redirect.
-	 * 
+	 *
 	 * @since 1.7
 	 * @param string $permalink The permalink
 	 * @param object $post A Post object
@@ -921,7 +921,7 @@ class SRM_Safe_Redirect_Manager {
 		if ( $this->redirect_post_type != $post->post_type )
 			return $permalink;
 
-		// We can't do anything to provide a permalink 
+		// We can't do anything to provide a permalink
 		// for regex enabled redirects.
 		if ( get_post_meta( $post->ID, $this->meta_key_enable_redirect_from_regex, true ) )
 			return $permalink;
