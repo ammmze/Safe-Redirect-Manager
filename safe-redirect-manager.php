@@ -768,6 +768,8 @@ class SRM_Safe_Redirect_Manager {
 	 */
 	public function action_parse_request() {
 
+		global $wp;
+
 		// get redirects from cache or recreate it
 		if ( false === ( $redirects = get_transient( $this->cache_key_redirects ) ) ) {
 			$redirects = $this->update_redirect_cache();
@@ -778,7 +780,7 @@ class SRM_Safe_Redirect_Manager {
 			return;
 
 		// get requested path and add a / before it
-		$requested_path = esc_url_raw( $_SERVER['REQUEST_URI'] );
+		$requested_path = ( home_url( add_query_arg(array(), $wp->request) ) );
 		$requested_path = stripslashes( $requested_path );
 
 		/**
